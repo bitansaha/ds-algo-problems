@@ -42,9 +42,8 @@ def binary_search(int_array, start_index, end_index, search_term):
 
 def search_rotated_sorted_array(int_array, search_term):
     pivot = search_pivot(int_array)
-    search_term_index = binary_search(int_array, 0, pivot, search_term)
-    return search_term_index if search_term_index != -1 else \
-        binary_search(int_array, pivot + 1, len(int_array) - 1, search_term)
+    return binary_search(int_array, 0, pivot, search_term) if search_term > int_array[0] \
+        else binary_search(int_array, pivot + 1, len(int_array) - 1, search_term)
 
 
 if __name__ == '__main__':
