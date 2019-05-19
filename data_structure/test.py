@@ -1,2 +1,3 @@
-for index in range(7-1, -1, -1):
+
+for index in range(1,10):
     print(index)
