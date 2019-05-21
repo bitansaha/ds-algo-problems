@@ -1,4 +1,6 @@
 
 print('HELLO')
-for index in range(4, 1, -1):
+arr = [1, 2, 3, 4]
+
+for index in range(2, len(arr), 1):
     print(index)

@@ -354,8 +354,48 @@ def problem5_solution1(int_array):
                 int_array[index] = 0
 
 
+# if __name__ == '__main__':
+#     original_arr = [0, 1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0, 9]
+#     arr = original_arr.copy()
+#     problem5_solution1(arr)
+#     print(*arr)
+
+
+''' -------------------------------------------------------------------------------------------------------------- '''
+
+'''
+Problem 6: Minimum swaps required to bring all elements less than or equal to k together.
+    Given an array of n positive integers and a number k. Find the minimum number of swaps required to bring all the 
+    numbers less than or equal to k together.
+Source: https://www.geeksforgeeks.org/minimum-swaps-required-bring-elements-less-equal-k-together/
+'''
+
+
+def problem6_solution1(arr, k):
+    count = 0
+
+    # count all elements <= k
+    for value in arr:
+        if value <= k:
+            count += 1
+
+    # figure out the sub-array of size equal to 'count' having highest number of values <= k
+    sub_array_count = 0
+    for index in range(count):
+        if arr[index] <= k:
+            sub_array_count += 1
+
+    max_count = sub_array_count
+
+    for index in range(count, len(arr), 1):
+        sub_array_count += (-1 if arr[index - count] <= k else 0) + (1 if arr[index] <= k else 0)
+        max_count = max(max_count, sub_array_count)
+
+    return count - max_count
+
+
 if __name__ == '__main__':
-    original_arr = [0, 1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0, 9]
+    original_arr = [2, 1, 5, 6, 3]
     arr = original_arr.copy()
-    problem5_solution1(arr)
-    print(*arr)
+    result = problem6_solution1(arr, 3)
+    print(result)
