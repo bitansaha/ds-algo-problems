@@ -259,6 +259,9 @@ def right_rotate(int_array, left_index, right_index):
     int_array[left_index] = temp
 
 
+# Solution 3: Using modular arithmetic, to hold dual value in single index
+# Time Complexity: O(n)
+# Space Complexity: O(1)
 def problem4_solution3(int_array):
     min_value = sys.maxsize
     max_value = -sys.maxsize - 1
@@ -274,17 +277,85 @@ def problem4_solution3(int_array):
     for index in range(len(int_array)):
         int_array[index] -= min_value
 
-   #max_value = max_value + mi
+    max_value = (max_value - min_value) + 1
+    negative_index = -1
+    positive_index = len(int_array)
 
-    pass
+    # using modular arithmetic in-place segregating negative and positive values
+    for index in range(len(int_array)):
+        value = int_array[index] % max_value
+        if (value + min_value) < 0:
+            # negative value encountered, place in next negative index
+            negative_index += 1
+            int_array[negative_index] += (value * max_value)
+        else:
+            # positive value encountered, place in next positive index
+            positive_index -= 1
+            int_array[positive_index] += (value * max_value)
+
+    # clearing the old values and holding the segregated in-order negative, positive values
+    for index in range(len(int_array)):
+        int_array[index] = int_array[index] // max_value
+
+    negative_count = negative_index
+    negative_index = -1
+    positive_index = len(int_array)
+
+    for index in range(len(int_array)):
+        if index % 2 == 0:
+            if (positive_index - 1) > negative_count:
+                positive_index -= 1
+                int_array[index] += (int_array[positive_index] % max_value) * max_value
+            else:
+                negative_index += 1
+                int_array[index] += (int_array[negative_index] % max_value) * max_value
+        else:
+            if (negative_index + 1) <= negative_count:
+                negative_index += 1
+                int_array[index] += (int_array[negative_index] % max_value) * max_value
+            else:
+                positive_index -= 1
+                int_array[index] += (int_array[positive_index] % max_value) * max_value
+
+    # retaining the new positive negative order and getting the old values back
+    for index in range(len(int_array)):
+        int_array[index] = (int_array[index] // max_value) + min_value
+
+
+# if __name__ == '__main__':
+#     original_arr = [-5, -2, 5, 2, 4, 7, 1, 8, 0, -8]
+#     arr = original_arr.copy()
+#     problem4_solution1(arr)
+#     print(*arr)
+#     arr = original_arr.copy()
+#     problem4_solution2(arr)
+#     print(*arr)
+#     arr = original_arr.copy()
+#     problem4_solution3(arr)
+#     print(*arr)
+
+
+''' -------------------------------------------------------------------------------------------------------------- '''
+
+'''
+Problem 5: Move all zeros to the end of array.
+Source: https://www.geeksforgeeks.org/move-zeroes-end-array-set-2-using-single-traversal/
+'''
+
+
+def problem5_solution1(int_array):
+    zero_count = 0
+    for index in range(len(int_array)):
+        if int_array[index] == 0:
+            zero_count += 1
+        else:
+            int_array[index - zero_count] = int_array[index]
+            if zero_count > 0:
+                int_array[index] = 0
 
 
 if __name__ == '__main__':
-    # original_arr = [-5, -2, 5, 2, 4, 7, 1, 8, 0, -8]
-    # arr = original_arr.copy()
-    # problem4_solution1(arr)
-    # print(*arr)
-    # arr = original_arr.copy()
-    # problem4_solution2(arr)
-    # print(*arr)
-    print(type(-sys.maxsize - 1))
+    original_arr = [0, 1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0, 9]
+    arr = original_arr.copy()
+    problem5_solution1(arr)
+    print(*arr)
