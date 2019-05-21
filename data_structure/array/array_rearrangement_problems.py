@@ -1,4 +1,5 @@
 import array
+import sys
 
 '''
 Problem 1: Rearrange array such that a[i] = i
@@ -258,11 +259,32 @@ def right_rotate(int_array, left_index, right_index):
     int_array[left_index] = temp
 
 
+def problem4_solution3(int_array):
+    min_value = sys.maxsize
+    max_value = -sys.maxsize - 1
+
+    # retrieving the min, max values of the array
+    for value in int_array:
+        if value < min_value:
+            min_value = value
+        if value > max_value:
+            max_value = value
+
+    # adding the minimum value to all indexes to make it an array of positive integers
+    for index in range(len(int_array)):
+        int_array[index] -= min_value
+
+   #max_value = max_value + mi
+
+    pass
+
+
 if __name__ == '__main__':
-    original_arr = [-5, -2, 5, 2, 4, 7, 1, 8, 0, -8]
-    arr = original_arr.copy()
-    problem4_solution1(arr)
-    print(*arr)
-    arr = original_arr.copy()
-    problem4_solution2(arr)
-    print(*arr)
+    # original_arr = [-5, -2, 5, 2, 4, 7, 1, 8, 0, -8]
+    # arr = original_arr.copy()
+    # problem4_solution1(arr)
+    # print(*arr)
+    # arr = original_arr.copy()
+    # problem4_solution2(arr)
+    # print(*arr)
+    print(type(-sys.maxsize - 1))
